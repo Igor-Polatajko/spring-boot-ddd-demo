@@ -11,5 +11,11 @@
 
     <artifactId>user</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jdbc</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -11,5 +11,15 @@
 
     <artifactId>feedback</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ihorpolataiko</groupId>
+            <artifactId>user</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
