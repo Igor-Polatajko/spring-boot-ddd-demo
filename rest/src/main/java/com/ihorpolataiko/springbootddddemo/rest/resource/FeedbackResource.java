@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/feedback")
 public class FeedbackResource {
 
-
     private FeedbackApi feedbackApi;
 
     public FeedbackResource(FeedbackApi feedbackApi) {
@@ -41,20 +40,20 @@ public class FeedbackResource {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    FeedbackDto create(@RequestBody FeedbackDto feedbackDto) {
+    public FeedbackDto create(@RequestBody FeedbackDto feedbackDto) {
         return feedbackApi.create(feedbackDto);
     }
 
     @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    FeedbackDto update(@PathVariable("id") Long id, @RequestBody FeedbackDto feedbackDto) {
+    public FeedbackDto update(@PathVariable("id") Long id, @RequestBody FeedbackDto feedbackDto) {
         return feedbackApi.update(id, feedbackDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteById(@PathVariable("id") Long id) {
+    public void deleteById(@PathVariable("id") Long id) {
         feedbackApi.deleteById(id);
     }
 

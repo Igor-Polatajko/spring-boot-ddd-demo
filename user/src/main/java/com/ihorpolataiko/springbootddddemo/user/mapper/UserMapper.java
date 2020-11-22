@@ -12,6 +12,7 @@ public class UserMapper {
                 .id(user.getId())
                 .name(user.getName())
                 .surname(user.getSurname())
+                .active(user.isActive())
                 .createdAt(user.getCreatedAt())
                 .build();
     }
@@ -20,6 +21,7 @@ public class UserMapper {
         return User.builder()
                 .name(userDto.getName())
                 .surname(userDto.getSurname())
+                .active(userDto.isActive())
                 .createdAt(userDto.getCreatedAt())
                 .build();
     }

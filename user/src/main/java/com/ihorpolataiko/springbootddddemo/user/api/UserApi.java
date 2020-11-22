@@ -14,7 +14,9 @@ public interface UserApi {
 
     UserDto update(Long id, UserDto userDto);
 
-    void deleteById(Long id);
+    UserDto deactivateById(Long id);
+
+    UserDto activateById(Long id);
 
     boolean existsById(Long id);
 

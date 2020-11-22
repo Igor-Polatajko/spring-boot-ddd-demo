@@ -37,8 +37,13 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
-    public void deleteById(Long id) {
-        userService.deleteById(id);
+    public UserDto deactivateById(Long id) {
+        return userService.deactivateById(id);
+    }
+
+    @Override
+    public UserDto activateById(Long id) {
+        return userService.activateById(id);
     }
 
     @Override

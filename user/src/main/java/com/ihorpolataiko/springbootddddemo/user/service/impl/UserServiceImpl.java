@@ -7,6 +7,7 @@ import com.ihorpolataiko.springbootddddemo.user.repository.UserRepository;
 import com.ihorpolataiko.springbootddddemo.user.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,11 +40,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto create(UserDto userDto) {
 
-        User user = userMapper.toDomain(userDto);
+        User user = userMapper.toDomain(userDto).toBuilder()
+                .createdAt(LocalDateTime.now())
+                .build();
 
-        return userMapper.mapToDto(
-                userRepository.save(user)
-        );
+        return saveUser(user);
     }
 
     @Override
@@ -57,25 +58,41 @@ public class UserServiceImpl implements UserService {
                 .id(id)
                 .build();
 
-        return userMapper.mapToDto(
-                userRepository.save(user)
-        );
+        return saveUser(user);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public UserDto deactivateById(Long id) {
 
-        if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found");
-        }
+        User updatedUser = findUserByIdOrThrowException(id).toBuilder()
+                .active(false)
+                .build();
 
-        // here somehow we would like to check if user has feedbacks
+        return saveUser(updatedUser);
+    }
 
-        userRepository.deleteById(id);
+    @Override
+    public UserDto activateById(Long id) {
+        User updatedUser = findUserByIdOrThrowException(id).toBuilder()
+                .active(true)
+                .build();
+
+        return saveUser(updatedUser);
     }
 
     @Override
     public boolean existsById(Long id) {
         return userRepository.existsById(id);
+    }
+
+    private UserDto saveUser(User updatedUser) {
+        return userMapper.mapToDto(
+                userRepository.save(updatedUser)
+        );
+    }
+
+    private User findUserByIdOrThrowException(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found!"));
     }
 }

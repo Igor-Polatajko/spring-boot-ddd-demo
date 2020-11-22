@@ -4,7 +4,6 @@ import com.ihorpolataiko.springbootddddemo.user.api.UserApi;
 import com.ihorpolataiko.springbootddddemo.user.api.dto.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,21 +39,27 @@ public class UserResource {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto create(@RequestBody UserDto userDto) {
+    public UserDto create(@RequestBody UserDto userDto) {
         return userApi.create(userDto);
     }
 
     @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    UserDto update(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
+    public UserDto update(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         return userApi.update(id, userDto);
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/deactivate/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteById(@PathVariable("id") Long id) {
-        userApi.deleteById(id);
+    public UserDto deactivate(@PathVariable("id") Long id) {
+        return userApi.deactivateById(id);
+    }
+
+    @PostMapping("/activate/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public UserDto activate(@PathVariable("id") Long id) {
+        return userApi.activateById(id);
     }
 
 }

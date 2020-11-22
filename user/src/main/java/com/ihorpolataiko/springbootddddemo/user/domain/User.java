@@ -21,6 +21,8 @@ public class User {
 
     private String surname;
 
+    private boolean active;
+
     private LocalDateTime createdAt;
 
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class UserDto {
 
     private Long id;
@@ -18,6 +18,8 @@ public class UserDto {
     private String name;
 
     private String surname;
+
+    private boolean active;
 
     private LocalDateTime createdAt;
 

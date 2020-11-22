@@ -1,11 +1,12 @@
 package com.ihorpolataiko.springbootddddemo.feedback.service.impl;
 
 import com.ihorpolataiko.springbootddddemo.feedback.api.dto.FeedbackDto;
-import com.ihorpolataiko.springbootddddemo.user.api.UserApi;
 import com.ihorpolataiko.springbootddddemo.feedback.domain.Feedback;
 import com.ihorpolataiko.springbootddddemo.feedback.mapper.FeedbackMapper;
 import com.ihorpolataiko.springbootddddemo.feedback.repository.FeedbackRepository;
 import com.ihorpolataiko.springbootddddemo.feedback.service.FeedbackService;
+import com.ihorpolataiko.springbootddddemo.user.api.UserApi;
+import com.ihorpolataiko.springbootddddemo.user.api.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,15 +44,15 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackDto create(FeedbackDto feedbackDto) {
 
-        if (!userApi.existsById(feedbackDto.getUserId())) {
-            throw new RuntimeException("User not found");
+        UserDto user = userApi.findById(feedbackDto.getUserId());
+
+        if (!user.isActive()) {
+            throw new RuntimeException("User is not active!");
         }
 
         Feedback feedback = feedbackMapper.toDomain(feedbackDto);
 
-        return feedbackMapper.mapToDto(
-                feedbackRepository.save(feedback)
-        );
+        return saveFeedback(feedback);
     }
 
     @Override
@@ -65,9 +66,7 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .id(id)
                 .build();
 
-        return feedbackMapper.mapToDto(
-                feedbackRepository.save(feedback)
-        );
+        return saveFeedback(feedback);
     }
 
     @Override
@@ -78,5 +77,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         feedbackRepository.deleteById(id);
+    }
+
+    private FeedbackDto saveFeedback(Feedback feedback) {
+        return feedbackMapper.mapToDto(
+                feedbackRepository.save(feedback)
+        );
     }
 }
