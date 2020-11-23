@@ -1,5 +1,6 @@
 package com.ihorpolataiko.springbootddddemo.feedback.service.impl;
 
+import com.ihorpolataiko.springbootddddemo.common.exception.NotFoundException;
 import com.ihorpolataiko.springbootddddemo.feedback.api.dto.FeedbackDto;
 import com.ihorpolataiko.springbootddddemo.feedback.domain.Feedback;
 import com.ihorpolataiko.springbootddddemo.feedback.mapper.FeedbackMapper;
@@ -9,6 +10,7 @@ import com.ihorpolataiko.springbootddddemo.user.api.UserApi;
 import com.ihorpolataiko.springbootddddemo.user.api.dto.UserDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +33,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public FeedbackDto findById(Long id) {
         return feedbackRepository.findById(id)
                 .map(feedbackMapper::mapToDto)
-                .orElseThrow(() -> new RuntimeException("Feedback not found!"));
+                .orElseThrow(() -> new NotFoundException("Feedback not found!"));
     }
 
     @Override
@@ -47,10 +49,12 @@ public class FeedbackServiceImpl implements FeedbackService {
         UserDto user = userApi.findById(feedbackDto.getUserId());
 
         if (!user.isActive()) {
-            throw new RuntimeException("User is not active!");
+            throw new NotFoundException("User is not active!");
         }
 
-        Feedback feedback = feedbackMapper.toDomain(feedbackDto);
+        Feedback feedback = feedbackMapper.toDomain(feedbackDto).toBuilder()
+                .createdAt(LocalDateTime.now())
+                .build();
 
         return saveFeedback(feedback);
     }
@@ -59,7 +63,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public FeedbackDto update(Long id, FeedbackDto feedbackDto) {
 
         if (!feedbackRepository.existsById(id)) {
-            throw new RuntimeException("Feedback not found");
+            throw new NotFoundException("Feedback not found");
         }
 
         Feedback feedback = feedbackMapper.toDomain(feedbackDto).toBuilder()
@@ -73,7 +77,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void deleteById(Long id) {
 
         if (!feedbackRepository.existsById(id)) {
-            throw new RuntimeException("Feedback not found");
+            throw new NotFoundException("Feedback not found");
         }
 
         feedbackRepository.deleteById(id);

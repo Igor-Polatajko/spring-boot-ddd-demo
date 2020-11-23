@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +20,7 @@ public class Feedback {
     private String content;
 
     private Long userId;
+
+    private LocalDateTime createdAt;
 
 }

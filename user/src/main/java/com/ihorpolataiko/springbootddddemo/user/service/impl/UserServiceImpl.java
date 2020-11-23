@@ -1,5 +1,6 @@
 package com.ihorpolataiko.springbootddddemo.user.service.impl;
 
+import com.ihorpolataiko.springbootddddemo.common.exception.NotFoundException;
 import com.ihorpolataiko.springbootddddemo.user.api.dto.UserDto;
 import com.ihorpolataiko.springbootddddemo.user.domain.User;
 import com.ihorpolataiko.springbootddddemo.user.mapper.UserMapper;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public UserDto findById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::mapToDto)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     @Override
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public UserDto update(Long id, UserDto userDto) {
 
         if (!userRepository.existsById(id)) {
-            throw new RuntimeException("User not found");
+            throw new NotFoundException("User not found");
         }
 
         User user = userMapper.toDomain(userDto).toBuilder()
@@ -93,6 +94,6 @@ public class UserServiceImpl implements UserService {
 
     private User findUserByIdOrThrowException(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+                .orElseThrow(() -> new NotFoundException("User not found!"));
     }
 }

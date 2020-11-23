@@ -12,6 +12,7 @@ public class FeedbackMapper {
                 .id(feedback.getId())
                 .content(feedback.getContent())
                 .userId(feedback.getUserId())
+                .createdAt(feedback.getCreatedAt())
                 .build();
     }
 
@@ -20,6 +21,7 @@ public class FeedbackMapper {
                 .id(feedbackDto.getId())
                 .content(feedbackDto.getContent())
                 .userId(feedbackDto.getUserId())
+                .createdAt(feedbackDto.getCreatedAt())
                 .build();
     }
 }

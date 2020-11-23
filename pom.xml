@@ -9,6 +9,7 @@
         <module>main</module>
         <module>web</module>
         <module>rest</module>
+        <module>common</module>
     </modules>
 
     <parent>
@@ -29,6 +30,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Project dependencies -->
             <dependency>
                 <groupId>com.ihorpolataiko</groupId>
                 <artifactId>feedback</artifactId>
@@ -49,6 +51,12 @@
                 <artifactId>web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ihorpolataiko</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

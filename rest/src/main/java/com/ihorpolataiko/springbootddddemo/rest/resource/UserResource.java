@@ -27,13 +27,13 @@ public class UserResource {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public UserDto findById(Long id) {
+    public UserDto findById(@PathVariable("id") Long id) {
         return userApi.findById(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDto> findAll(@PathVariable("id") Long id) {
+    public List<UserDto> findAll() {
         return userApi.findAll();
     }
 

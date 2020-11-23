@@ -13,12 +13,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jdbc</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ihorpolataiko</groupId>
             <artifactId>user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ihorpolataiko</groupId>
+            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
 

@@ -24,6 +24,10 @@
             <groupId>com.ihorpolataiko</groupId>
             <artifactId>feedback</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ihorpolataiko</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
